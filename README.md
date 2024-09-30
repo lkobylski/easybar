@@ -42,7 +42,7 @@ func main() {
 
 ### Handling multiple progress bars simultaneously
 
-The package supports displaying multiple progress bars at the same time. Use the `UseMultiBars()` function and define the order of the bars using the `Order()` option.
+The package supports displaying multiple progress bars at the same time. Use the `UseMultiBars()` function and define the order of the bars using the `WithOrder()` option.
 
 ```go
 package main
@@ -84,10 +84,10 @@ func main() {
 
 ### Customizing the bars
 
-Each progress bar can be customized using options like `Order()` to define the order in which multiple bars are displayed.
+Each progress bar can be customized using options like `WithOrder()` to define the order in which multiple bars are displayed.
 
 ```go
-bar := easybar.NewEasyBar(100, "My Task", easybar.Order(2))
+bar := easybar.NewEasyBar(100, "My Task", easybar.WithOrder(2))
 ```
 
 ### Functions
