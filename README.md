@@ -2,6 +2,7 @@
 
 `easybar` is a simple Go package that enables creating and displaying progress bars in the terminal. It supports multiple progress bars and dynamic updates.
 
+![Example](assets/example.gif)
 
 ❗ This project is for **educational** purposes and it is currently not recommended to import this package into your project. It serves as a demonstration of how easy it is to create your own packages in Go.  
 

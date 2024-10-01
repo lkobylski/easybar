@@ -2,6 +2,7 @@ package easybar
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 	"sync"
 	"unicode/utf8"
@@ -10,6 +11,22 @@ import (
 type Option func(bar *EasyBar)
 
 const maxName = 20
+
+type Color string
+
+const (
+	ColorReset  Color = "\033[0m"
+	ColorRed    Color = "\033[31m"
+	ColorGreen  Color = "\033[32m"
+	ColorYellow Color = "\033[33m"
+	ColorBlue   Color = "\033[34m"
+)
+
+var ansiRegexp = regexp.MustCompile(`\x1b\[[0-9;]*m`)
+
+func removeANSI(text string) string {
+	return ansiRegexp.ReplaceAllString(text, "")
+}
 
 type EasyBar struct {
 	max     int
@@ -43,6 +60,12 @@ func NewEasyBar(max int, name string, opts ...Option) *EasyBar {
 func WithOrder(n int) Option {
 	return func(eb *EasyBar) {
 		eb.order = n
+	}
+}
+
+func WithColor(color Color) Option {
+	return func(eb *EasyBar) {
+		eb.name = fmt.Sprintf("%s%s%s", color, eb.name, ColorReset)
 	}
 }
 
@@ -84,8 +107,17 @@ func (e *EasyBar) finish() {
 func (e *EasyBar) render() {
 	if !e.done {
 		percent := (float32(e.current) / float32(e.max)) * 100
-		nameWithPadding := fmt.Sprintf("%-*s", maxName, e.name)
-		fmt.Printf("\033[%d;0H\033[K%s [%-20s] %.1f%%", e.order, nameWithPadding, strings.Repeat("#", int(percent/5)), percent)
+
+		actualNameLength := utf8.RuneCountInString(removeANSI(e.name))
+		paddingLength := maxName - actualNameLength
+
+		if paddingLength < 0 {
+			paddingLength = 0
+		}
+		paddedName := e.name + strings.Repeat(" ", paddingLength)
+
+		//nameWithPadding := fmt.Sprintf("%-*s", maxName, actualName)
+		fmt.Printf("\033[%d;0H\033[K%s [%-20s] %.1f%%", e.order, paddedName, strings.Repeat("█", int(percent/5)), percent)
 	}
 	if e.current == e.max {
 		e.finish()
