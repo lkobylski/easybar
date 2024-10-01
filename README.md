@@ -85,11 +85,20 @@ func main() {
 
 ### Customizing the bars
 
-Each progress bar can be customized using options like `WithOrder()` to define the order in which multiple bars are displayed.
+Each progress bar can be customized using options like WithOrder() to define the order in which multiple bars are displayed, or WithColor() to set the color of the progress bar’s name.
 
 ```go
-bar := easybar.NewEasyBar(100, "My Task", easybar.WithOrder(2))
-```
+bar := easybar.NewEasyBar(100, "My Task",
+	easybar.WithOrder(2),
+	easybar.WithColor(easybar.ColorGreen), 
+	)
+```  
+**Available colors:**
+* `easybar.ColorRed`
+* `easybar.ColorGreen`
+* `easybar.ColorYellow`
+* `easybar.ColorBlue`
+* `easybar.ColorReset` (resets to default terminal color)
 
 ### Functions
 
