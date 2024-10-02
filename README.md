@@ -1,3 +1,9 @@
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/lkobylski/easybar)
+![GitHub License](https://img.shields.io/github/license/lkobylski/easybar)
+![GitHub branch status](https://img.shields.io/github/checks-status/lkobylski/easybar/main)
+![GitHub Tag](https://img.shields.io/github/v/tag/lkobylski/easybar)
+
+
 # easybar
 
 `easybar` is a simple Go package that enables creating and displaying progress bars in the terminal. It supports multiple progress bars and dynamic updates.
